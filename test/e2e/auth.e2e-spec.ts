@@ -29,7 +29,7 @@ describe('Auth Module (e2e)', () => {
         password: 'Password123!',
       };
 
-      const { statusCode, success, data } = await authAPI.create(payload);
+      const { statusCode, success } = await authAPI.create(payload);
 
       expect(success).toBe(true);
       expect(statusCode).toBe(HttpStatus.CREATED);

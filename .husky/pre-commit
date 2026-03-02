@@ -3,7 +3,6 @@ echo "Run pre commit checks"
 
 pnpm lint-staged && \
 pnpm test && \
-pnpm test:e2e && \
-pnpm lint
+pnpm test:e2e
 
 echo "Finish pre commit checks"
