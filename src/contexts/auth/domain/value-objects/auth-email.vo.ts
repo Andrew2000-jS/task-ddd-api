@@ -1,4 +1,4 @@
-import { ValueObject } from 'src/shared/contexts/value-objects/value-objects';
+import { ValueObject } from 'src/shared/contexts/domain/value-objects/value-objects';
 import { InvalidAuthEmailError } from '../exceptions/auth-email.error';
 
 export class AuthEmail extends ValueObject<string> {

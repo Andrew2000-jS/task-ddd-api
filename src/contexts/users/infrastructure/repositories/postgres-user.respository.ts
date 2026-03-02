@@ -6,7 +6,6 @@ import { AuthId } from '../../domain/value-objects/auth-id.vo';
 import { UserName } from '../../domain/value-objects/username.vo';
 import { UserEntity } from '../persistence/user.entity';
 import { UserMapper } from '../utils/user.mapper';
-import { UserId } from '../../domain/value-objects/user-id.vo';
 
 @Injectable()
 export class PostgresUserRepository extends UserRepository {
@@ -31,38 +30,18 @@ export class PostgresUserRepository extends UserRepository {
     return entity ? UserMapper.toDomain(entity) : null;
   }
 
-  async findOne(userId: UserId): Promise<User | null> {
+  async findOne(authId: AuthId): Promise<User | null> {
     const entity = await this.repository.findOne({
-      where: { id: userId.getValue() },
+      where: { auth: { id: authId.getValue() } },
       relations: ['tasks'],
     });
 
     return entity ? UserMapper.toDomain(entity) : null;
   }
 
-  async findByAuthId(authId: AuthId): Promise<User | null> {
-    const entity = await this.repository.findOne({
-      where: {
-        auth: { id: authId.getValue() },
-      },
-      relations: ['tasks', 'auth'],
+  async delete(authId: AuthId): Promise<void> {
+    await this.repository.delete({
+      auth: { id: authId.getValue() },
     });
-
-    return entity ? UserMapper.toDomain(entity) : null;
-  }
-
-  async findAll(limit: number, offset: number): Promise<User[]> {
-    const entities = await this.repository.find({
-      take: limit,
-      skip: offset,
-      relations: ['tasks'],
-      order: { createdAt: 'DESC' },
-    });
-
-    return entities.map((entity) => UserMapper.toDomain(entity));
-  }
-
-  async delete(userId: UserId): Promise<void> {
-    await this.repository.delete(userId.getValue());
   }
 }

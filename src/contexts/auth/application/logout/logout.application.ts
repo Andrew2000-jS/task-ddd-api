@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthRepository } from '../../domain/auth.repository';
 import { AuthId } from '../../domain/value-objects/auth-id.vo';
-import { NotFoundError } from 'src/shared/contexts/exceptions/not-found.error';
+import { NotFoundError } from 'src/shared/contexts/domain/exceptions/not-found.error';
 
 @Injectable()
 export class LogoutUseCase {
@@ -11,7 +11,7 @@ export class LogoutUseCase {
     const id = new AuthId(authId);
     const auth = await this.repository.findOne(id);
 
-    if (!auth) throw new NotFoundError('Authentication record not found');
+    if (!auth) throw new NotFoundError('Auth');
 
     auth.logout();
 

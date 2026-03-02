@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { AuthRepository } from '../../domain/auth.repository';
 import { TokenService } from '../../domain/services/token.service';
 import { AuthEmail } from '../../domain/value-objects/auth-email.vo';
-import { UnauthorizedError } from 'src/shared/contexts/exceptions/unauthorized.error';
+import { UnauthorizedError } from 'src/shared/contexts/domain/exceptions/unauthorized.error';
 import { LoginDto } from './login.dto';
 import { AuthTokens } from '../../domain/services/token.service';
 
@@ -26,8 +26,10 @@ export class LoginUseCase {
     const tokens = await this.tokenService.generateTokens({
       sub: primitives.id,
       email: primitives.email,
+      userId: primitives.userId,
     });
 
+    auth.updateLastLogin();
     auth.updateRefreshToken(tokens.refreshToken);
 
     await this.repository.save(auth);

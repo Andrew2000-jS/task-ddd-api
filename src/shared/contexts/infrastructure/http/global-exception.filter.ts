@@ -8,7 +8,7 @@ import {
 } from '@nestjs/common';
 import { Response } from 'express';
 import { ApiResponseFactory } from './api-response.factory';
-import { InvalidArgumentError } from '../exceptions/invalid-argument.error';
+import { InvalidArgumentError } from '../../domain/exceptions/invalid-argument.error';
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {

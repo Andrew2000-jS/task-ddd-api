@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/shared/contexts/database/database.module';
 import { CreateAuthUseCase } from '../application/create-auth/create-auth.application';
 import { DeleteAuthUseCase } from '../application/delete-auth/delete-auth.application';
 import { FindByEmailAuthUseCase } from '../application/find-by-email-auth/find-by-email.application';
@@ -12,8 +11,6 @@ import { AuthRepository } from '../domain/auth.repository';
 import { PostgresAuthRepository } from './repositories/postgres-auth.repository';
 import { CreateAuthController } from './api/http/create-auth/create-auth.ctr';
 import { DeleteAuthController } from './api/http/delete-auth/delete-auth.ctr';
-import { FindByEmailAuthController } from './api/http/find-by-email-auth/find-by-email-auth.ctr';
-import { FindOneAuthController } from './api/http/find-one-auth/find-one-auth.ctr';
 import { LoginController } from './api/http/login/login.ctr';
 import { LogoutController } from './api/http/logout/logout.ctr';
 import { RecoveryPasswordController } from './api/http/recovery-password/recovery-password.ctr';
@@ -24,7 +21,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './guards/auth.guard';
 
 @Module({
-  imports: [DatabaseModule, JwtModule.register({})],
+  imports: [JwtModule.register({})],
   providers: [
     AuthGuard,
     CreateAuthUseCase,
@@ -47,8 +44,6 @@ import { AuthGuard } from './guards/auth.guard';
   controllers: [
     CreateAuthController,
     DeleteAuthController,
-    FindByEmailAuthController,
-    FindOneAuthController,
     LoginController,
     LogoutController,
     RecoveryPasswordController,

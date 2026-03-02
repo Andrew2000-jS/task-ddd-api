@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { NotFoundError } from 'src/shared/contexts/exceptions/not-found.error';
+import { NotFoundError } from 'src/shared/contexts/domain/exceptions/not-found.error';
 import { AuthRepository } from '../../domain/auth.repository';
 import { PrimitivesAuth } from '../../domain/auth';
 import { AuthEmail } from '../../domain/value-objects/auth-email.vo';

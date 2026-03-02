@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { UserRepository } from '../../domain/user.repository';
-import { CreateUserDto } from './crate-user.dto';
+import { CreateUserDto } from './create-user.dto';
 import { PrimitivesUser, User } from '../../domain/user';
 import { UserName } from '../../domain/value-objects/username.vo';
 import { UserAlreadyExistError } from '../../domain/exceptions/user-already-exist.error';
@@ -11,11 +11,12 @@ export class CreateUserUseCase {
 
   async execute(data: CreateUserDto): Promise<PrimitivesUser> {
     try {
-      const username = new UserName(data.username);
+      if (data.username) {
+        const username = new UserName(data.username);
+        const existingUser = await this.repository.findByUsername(username);
 
-      const existingUser = await this.repository.findByUsername(username);
-
-      if (existingUser) throw new UserAlreadyExistError(data.username);
+        if (existingUser) throw new UserAlreadyExistError(data.username);
+      }
 
       const user = User.create({
         firstname: data.firstname,

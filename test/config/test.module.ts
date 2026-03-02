@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { AppModule } from 'src/app.module';
-import { GlobalExceptionFilter } from 'src/shared/contexts/http/global-exception.filter';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
 import { MockAuthGuard } from './mocks';
-import { DatabaseModule } from 'src/shared/contexts/database/database.module';
+import { DatabaseModule } from 'src/shared/contexts/infrastructure/database/database.module';
+import { GlobalExceptionFilter } from 'src/shared/contexts/infrastructure/http/global-exception.filter';
 
 export async function createTestingApp(): Promise<INestApplication> {
   const moduleFixture: TestingModule = await Test.createTestingModule({

@@ -1,4 +1,4 @@
-import { InvalidUuidError } from 'src/shared/contexts/exceptions/invalid-uuid.error';
+import { InvalidUuidError } from 'src/shared/contexts/domain/exceptions/invalid-uuid.error';
 
 export class UserTasks {
   private readonly value: string[];

@@ -5,8 +5,8 @@ import { TaskSlug } from './value-objects/task-slug.vo';
 import { TaskDescription } from './value-objects/task-description.vo';
 import { TaskIsCompleted } from './value-objects/task-is-completed.vo';
 import { TaskUserId } from './value-objects/task-user-id.vo';
-import { CreatedAt } from 'src/shared/contexts/value-objects/created-at.vo';
-import { UpdatedAt } from 'src/shared/contexts/value-objects/updated-at.vo';
+import { CreatedAt } from 'src/shared/contexts/domain/value-objects/created-at.vo';
+import { UpdatedAt } from 'src/shared/contexts/domain/value-objects/updated-at.vo';
 
 export interface PrimitiveTask {
   id: string;

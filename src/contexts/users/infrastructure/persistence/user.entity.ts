@@ -17,18 +17,18 @@ export class UserEntity {
   @PrimaryColumn('uuid')
   id: string;
 
-  @Column()
-  firstname: string;
+  @Column({ type: 'varchar', nullable: true })
+  firstname: string | null;
 
-  @Column()
-  lastname: string;
+  @Column({ type: 'varchar', nullable: true })
+  lastname: string | null;
 
-  @Column()
+  @Column({ type: 'varchar', nullable: true })
   @Index({ unique: true })
-  username: string;
+  username: string | null;
 
-  @Column({ type: 'date' })
-  birthday: Date;
+  @Column({ type: 'date', nullable: true })
+  birthday: Date | null;
 
   @OneToOne(() => AuthEntity, (auth) => auth.user, {
     onDelete: 'CASCADE',

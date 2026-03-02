@@ -12,11 +12,14 @@ import type { Response } from 'express';
 import { FindOneTaskQueryDto } from './find-one-task.ctr.dto';
 import { API_V1_TASKS } from '../constants';
 import { FindOneTaskUseCase } from 'src/contexts/tasks/application/find-one-task/find-one-task.application';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
-import { ParamDto } from 'src/shared/contexts/types/query.dto';
+import { ParamDto } from 'src/shared/contexts/infrastructure/dto/query.dto';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
+@ApiTags('Task')
 @Controller(API_V1_TASKS)
+@ApiBearerAuth('accessToken')
 @UseGuards(AuthGuard)
 export class FindOneTaskController {
   constructor(private readonly useCase: FindOneTaskUseCase) {}

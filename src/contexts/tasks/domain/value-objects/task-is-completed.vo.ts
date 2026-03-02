@@ -1,4 +1,4 @@
-import { ValueObject } from 'src/shared/contexts/value-objects/value-objects';
+import { ValueObject } from 'src/shared/contexts/domain/value-objects/value-objects';
 
 export class TaskIsCompleted extends ValueObject<boolean> {
   constructor(value: boolean) {

@@ -1,7 +1,7 @@
-import { InvalidArgumentError } from "src/shared/contexts/exceptions/invalid-argument.error";
+import { InvalidArgumentError } from 'src/shared/contexts/domain/exceptions/invalid-argument.error';
 
 export class InvalidAuthEmailError extends InvalidArgumentError {
-    constructor(value: string) {
-        super(`The email <${value}> is not valid.`);
-    }
+  constructor(value: string) {
+    super(`The email <${value}> is not valid.`);
+  }
 }

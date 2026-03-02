@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { TaskRepository } from '../../domain/task.repository';
 import { TaskId } from '../../domain/value-objects/task-id.vo';
-import { NotFoundError } from 'src/shared/contexts/exceptions/not-found.error';
+import { NotFoundError } from 'src/shared/contexts/domain/exceptions/not-found.error';
 
 @Injectable()
 export class DeleteTaskUseCase {

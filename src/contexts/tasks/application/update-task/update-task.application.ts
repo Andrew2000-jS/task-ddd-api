@@ -3,7 +3,7 @@ import { TaskRepository } from '../../domain/task.repository';
 import { PrimitiveTask, Task } from '../../domain/task';
 import { UpdateTaskDto } from './update-task.dto';
 import { TaskId } from '../../domain/value-objects/task-id.vo';
-import { NotFoundError } from 'src/shared/contexts/exceptions/not-found.error';
+import { NotFoundError } from 'src/shared/contexts/domain/exceptions/not-found.error';
 
 @Injectable()
 export class UpdateTaskUseCase {

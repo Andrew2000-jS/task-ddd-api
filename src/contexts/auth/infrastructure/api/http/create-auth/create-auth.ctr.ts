@@ -9,9 +9,11 @@ import {
 import type { Response } from 'express';
 import { CreateAuthDto } from './create-auth.ctr.dto';
 import { CreateAuthUseCase } from 'src/contexts/auth/application/create-auth/create-auth.application';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
 import { API_V1_AUTH } from '../constants';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
+@ApiTags('Authentication')
 @Controller(API_V1_AUTH)
 export class CreateAuthController {
   constructor(private readonly useCase: CreateAuthUseCase) {}

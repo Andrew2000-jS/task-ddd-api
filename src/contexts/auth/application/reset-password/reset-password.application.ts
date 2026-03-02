@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthRepository } from '../../domain/auth.repository';
 import { AuthPassword } from '../../domain/value-objects/auth-password.vo';
-import { UnauthorizedError } from 'src/shared/contexts/exceptions/unauthorized.error';
+import { UnauthorizedError } from 'src/shared/contexts/domain/exceptions/unauthorized.error';
 import { ResetPasswordDto } from './reset-password.dto';
 
 @Injectable()

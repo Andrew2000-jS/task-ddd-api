@@ -6,29 +6,25 @@ import { FindOneUserController } from './api/http/find-one-user/find-one-user.ct
 import { CreateUserUseCase } from '../application/create-user/create-user.application';
 import { UpdateUserUseCase } from '../application/update-user/update-user.application';
 import { DeleteUserUseCase } from '../application/delete-user/delete-user.application';
-import { FindAllUsersUseCase } from '../application/find-all-user/find-all-user.application';
 import { FindOneUserUseCase } from '../application/find-one-user/find-one-user.application';
 import { UserRepository } from '../domain/user.repository';
 import { PostgresUserRepository } from './repositories/postgres-user.respository';
-import { DatabaseModule } from 'src/shared/contexts/database/database.module';
-import { FindAllUsersController } from './api/http/find-all-users/find-all-users.ctr';
 import { AuthModule } from 'src/contexts/auth/infrastructure/auth.module';
+import { CreateUserEventController } from './api/events/create-user.event.ctr';
 
 @Module({
-  imports: [DatabaseModule, AuthModule],
+  imports: [AuthModule],
   controllers: [
-    CreateUserController,
+    CreateUserEventController,
     UpdateUserController,
     DeleteUserController,
     FindOneUserController,
-    FindAllUsersController,
   ],
   providers: [
     CreateUserUseCase,
     UpdateUserUseCase,
     DeleteUserUseCase,
     FindOneUserUseCase,
-    FindAllUsersUseCase,
     {
       provide: UserRepository,
       useClass: PostgresUserRepository,
@@ -39,7 +35,6 @@ import { AuthModule } from 'src/contexts/auth/infrastructure/auth.module';
     UpdateUserUseCase,
     DeleteUserUseCase,
     FindOneUserUseCase,
-    FindAllUsersUseCase,
   ],
 })
 export class UserModule {}

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { QueryDTO } from 'src/shared/contexts/types/query.dto';
 import { PrimitiveTask } from '../../domain/task';
 import { TaskRepository } from '../../domain/task.repository';
+import { QueryDTO } from 'src/shared/contexts/application/dto/query.dto';
 
 export interface FindAllTasksResponse {
   data: PrimitiveTask[];

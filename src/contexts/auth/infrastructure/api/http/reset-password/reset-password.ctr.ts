@@ -9,9 +9,11 @@ import {
 import type { Response } from 'express';
 import { ResetPasswordUseCase } from 'src/contexts/auth/application/reset-password/reset-password.application';
 import { ResetPasswordDto } from './reset-password.ctr.dto';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
 import { API_V1_AUTH } from '../constants';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
+@ApiTags('Authentication')
 @Controller(API_V1_AUTH)
 export class ResetPasswordController {
   constructor(private readonly useCase: ResetPasswordUseCase) {}

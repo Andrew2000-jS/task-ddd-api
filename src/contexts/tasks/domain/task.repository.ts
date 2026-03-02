@@ -1,4 +1,4 @@
-import { PaginationResult } from 'src/shared/contexts/types/pagination.interface';
+import { PaginationResult } from 'src/shared/contexts/domain/pagination';
 import { Task } from './task';
 import { TaskId } from './value-objects/task-id.vo';
 import { TaskSlug } from './value-objects/task-slug.vo';

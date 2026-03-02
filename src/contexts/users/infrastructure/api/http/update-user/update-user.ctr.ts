@@ -3,7 +3,6 @@ import {
   Controller,
   HttpCode,
   HttpStatus,
-  Param,
   Patch,
   Res,
   UseGuards,
@@ -11,20 +10,23 @@ import {
 import type { Response } from 'express';
 import { UpdateUserBodyDto } from './update-user.ctr.dto';
 import { UpdateUserUseCase } from 'src/contexts/users/application/update-user/update-user.application';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
 import { API_V1_USERS } from '../constants';
-import { ParamDto } from 'src/shared/contexts/types/query.dto';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { GetUser } from 'src/shared/contexts/infrastructure/decorators/get-user.decorator';
 
+@ApiTags('User')
 @Controller(API_V1_USERS)
+@ApiBearerAuth('accessToken')
 @UseGuards(AuthGuard)
 export class UpdateUserController {
   constructor(private readonly useCase: UpdateUserUseCase) {}
 
-  @Patch(':id')
+  @Patch()
   @HttpCode(HttpStatus.OK)
   async run(
-    @Param() { id }: ParamDto,
+    @GetUser('sub') id: string,
     @Body() body: UpdateUserBodyDto,
     @Res() res: Response,
   ): Promise<void> {

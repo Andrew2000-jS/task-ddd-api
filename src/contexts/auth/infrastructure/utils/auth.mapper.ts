@@ -14,6 +14,7 @@ export class AuthMapper {
     entity.refreshToken = primitives.refreshToken;
     entity.resetPasswordToken = primitives.resetPasswordToken;
     entity.resetPasswordExpires = primitives.resetPasswordExpires;
+    entity.lastLogin = primitives.lastLoging;
 
     return entity;
   }
@@ -21,6 +22,7 @@ export class AuthMapper {
   static toDomain(entity: AuthEntity): Auth {
     return Auth.fromPrimitives({
       id: entity.id,
+      userId: entity.user ? entity.user.id : null,
       email: entity.email,
       password: entity.password,
       createdAt: entity.createdAt,
@@ -28,6 +30,7 @@ export class AuthMapper {
       refreshToken: entity.refreshToken,
       resetPasswordToken: entity.resetPasswordToken,
       resetPasswordExpires: entity.resetPasswordExpires,
+      lastLoging: entity.lastLogin,
     });
   }
 }

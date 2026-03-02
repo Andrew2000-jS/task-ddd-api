@@ -5,20 +5,28 @@ import {
   HttpStatus,
   Post,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { API_V1_USERS } from '../constants';
 import { CreateUserUseCase } from 'src/contexts/users/application/create-user/create-user.application';
 import { CreateUserControllerDto } from './create-user.ctr.dto';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
+import { GetUser } from 'src/shared/contexts/infrastructure/decorators/get-user.decorator';
 
+@ApiTags('User')
 @Controller(API_V1_USERS)
+@ApiBearerAuth('accessToken')
+@UseGuards(AuthGuard)
 export class CreateUserController {
   constructor(private readonly useCase: CreateUserUseCase) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   async run(
+    @GetUser('sub') authId: string,
     @Body() body: CreateUserControllerDto,
     @Res() res: Response,
   ): Promise<void> {
@@ -27,7 +35,7 @@ export class CreateUserController {
       lastname: body.lastname,
       username: body.username,
       birthday: new Date(body.birthday),
-      authId: body.authId,
+      authId,
     });
 
     const response = ApiResponseFactory.success(newUser);

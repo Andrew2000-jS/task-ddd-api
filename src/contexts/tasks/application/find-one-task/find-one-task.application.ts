@@ -4,7 +4,7 @@ import { PrimitiveTask } from '../../domain/task';
 import { FindOneTaskDto } from './find-one-task.dto';
 import { TaskId } from '../../domain/value-objects/task-id.vo';
 import { TaskSlug } from '../../domain/value-objects/task-slug.vo';
-import { NotFoundError } from 'src/shared/contexts/exceptions/not-found.error';
+import { NotFoundError } from 'src/shared/contexts/domain/exceptions/not-found.error';
 
 @Injectable()
 export class FindOneTaskUseCase {

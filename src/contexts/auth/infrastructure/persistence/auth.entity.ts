@@ -28,6 +28,13 @@ export class AuthEntity {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
+  @Column({
+    name: 'last_login',
+    type: 'timestamp',
+    nullable: true,
+  })
+  lastLogin: Date | null;
+
   @Column({ name: 'refresh_token', nullable: true, type: 'text' })
   refreshToken: string | null;
 

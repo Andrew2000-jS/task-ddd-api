@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { UpdateUserDto } from './update-user.dto';
 import { UserRepository } from '../../domain/user.repository';
 import { PrimitivesUser, User } from '../../domain/user';
-import { NotFoundError } from 'src/shared/contexts/exceptions/not-found.error';
+import { NotFoundError } from 'src/shared/contexts/domain/exceptions/not-found.error';
 import { UserName } from '../../domain/value-objects/username.vo';
 import { UserAlreadyExistError } from '../../domain/exceptions/user-already-exist.error';
-import { UserId } from '../../domain/value-objects/user-id.vo';
+import { AuthId } from '../../domain/value-objects/auth-id.vo';
 
 @Injectable()
 export class UpdateUserUseCase {
@@ -13,9 +13,9 @@ export class UpdateUserUseCase {
 
   async execute(id: string, data: UpdateUserDto): Promise<PrimitivesUser> {
     try {
-      const userId = new UserId(id);
+      const authId = new AuthId(id);
 
-      const user = await this.repository.findOne(userId);
+      const user = await this.repository.findOne(authId);
 
       if (!user) throw new NotFoundError('user');
 

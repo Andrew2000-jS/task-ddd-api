@@ -1,4 +1,4 @@
-import { InvalidArgumentError } from 'src/shared/contexts/exceptions/invalid-argument.error';
+import { InvalidArgumentError } from 'src/shared/contexts/domain/exceptions/invalid-argument.error';
 
 export class UserAlreadyExistError extends InvalidArgumentError {
   constructor(username: string) {

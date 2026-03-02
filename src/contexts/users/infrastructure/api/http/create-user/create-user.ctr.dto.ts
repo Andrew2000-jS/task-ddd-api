@@ -29,8 +29,4 @@ export class CreateUserControllerDto {
   @IsDateString()
   @IsNotEmpty()
   birthday: string;
-
-  @IsUUID('4')
-  @IsNotEmpty()
-  authId: string;
 }

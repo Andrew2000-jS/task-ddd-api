@@ -8,10 +8,12 @@ import {
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { RecoveryPasswordDto } from './recovery-password.ctr.dto';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
 import { API_V1_AUTH } from '../constants';
 import { RecoveryPasswordUseCase } from 'src/contexts/auth/application/recovery-password/recovery-password.application';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
+@ApiTags('Authentication')
 @Controller(API_V1_AUTH)
 export class RecoveryPasswordController {
   constructor(private readonly useCase: RecoveryPasswordUseCase) {}

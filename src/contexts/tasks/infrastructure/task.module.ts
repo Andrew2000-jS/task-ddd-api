@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from 'src/shared/contexts/database/database.module';
 import { CreateTaskController } from './api/http/create-task/create-task.ctr';
 import { UpdateTaskController } from './api/http/update-task/update-task.ctr';
 import { DeleteTaskController } from './api/http/delete-task/delete-task.ctr';
@@ -15,7 +14,7 @@ import { PostgresTaskRepository } from './repositories/postgres-task.repository'
 import { AuthModule } from 'src/contexts/auth/infrastructure/auth.module';
 
 @Module({
-  imports: [DatabaseModule, AuthModule],
+  imports: [AuthModule],
   controllers: [
     CreateTaskController,
     UpdateTaskController,

@@ -1,4 +1,4 @@
-import { InvalidUuidError } from 'src/shared/contexts/exceptions/invalid-uuid.error';
+import { InvalidUuidError } from 'src/shared/contexts/domain/exceptions/invalid-uuid.error';
 import { randomUUID as v4 } from 'crypto';
 import { UserTasks } from 'src/contexts/users/domain/value-objects/user-tasks.vo';
 

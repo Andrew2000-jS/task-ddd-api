@@ -1,3 +1,11 @@
+## TODO
+
+1- Crear usuario al momento de crear el auth (eventos de redis)
+2- Agregar el userId a los token de redis
+
+- Para ello se debe de modificar la entidad de auth
+  3- Corregir test de tasks
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>

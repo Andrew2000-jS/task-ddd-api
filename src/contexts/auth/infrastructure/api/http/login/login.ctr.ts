@@ -9,9 +9,11 @@ import {
 import type { Response } from 'express';
 import { LoginUseCase } from 'src/contexts/auth/application/login/login.application';
 import { LoginDto } from './login.ctr.dto';
-import { ApiResponseFactory } from 'src/shared/contexts/http/api-response.factory';
 import { API_V1_AUTH } from '../constants';
+import { ApiTags } from '@nestjs/swagger';
+import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
+@ApiTags('Authentication')
 @Controller(API_V1_AUTH)
 export class LoginController {
   constructor(private readonly useCase: LoginUseCase) {}

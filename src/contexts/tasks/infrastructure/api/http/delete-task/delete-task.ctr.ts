@@ -10,10 +10,13 @@ import {
 import type { Response } from 'express';
 import { API_V1_TASKS } from '../constants';
 import { DeleteTaskUseCase } from 'src/contexts/tasks/application/delete-task/delete-task.application';
-import { ParamDto } from 'src/shared/contexts/types/query.dto';
+import { ParamDto } from 'src/shared/contexts/infrastructure/dto/query.dto';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Task')
 @Controller(API_V1_TASKS)
+@ApiBearerAuth('accessToken')
 @UseGuards(AuthGuard)
 export class DeleteTaskController {
   constructor(private readonly useCase: DeleteTaskUseCase) {}

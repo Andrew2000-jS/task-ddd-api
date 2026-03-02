@@ -1,20 +1,10 @@
-export interface CreateAuth {
-  authID: string;
-  rawPassword: string;
-  userEmail: string;
+export interface ApiTestResponse {
+  statusCode: number;
+  success: boolean;
+  data: any;
+  meta: Record<string, any>;
 }
 
-export interface CreateUser {
-  userID: string;
-  username: string;
-  authId: string;
-}
-
-export interface CreateTask {
-  taskID: string;
-  title: string;
-  slug: string;
-  description?: string;
-  isCompleted?: boolean;
-  userId: string;
+export interface ApiTest {
+  create: (...data) => Promise<ApiTestResponse>;
 }

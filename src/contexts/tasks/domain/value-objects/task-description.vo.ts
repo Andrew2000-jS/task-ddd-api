@@ -1,4 +1,4 @@
-import { ValueObject } from 'src/shared/contexts/value-objects/value-objects';
+import { ValueObject } from 'src/shared/contexts/domain/value-objects/value-objects';
 import { TaskDescriptionTooShortError } from '../exceptions/task-description.error';
 
 export class TaskDescription extends ValueObject<string> {

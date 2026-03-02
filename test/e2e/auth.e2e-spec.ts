@@ -1,9 +1,10 @@
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import request from 'supertest';
 import { DataSource } from 'typeorm';
-import { clearDB, createAuth } from 'test/utils/db';
+import { clearDB } from 'test/utils/db';
 import { createTestingApp } from 'test/config/test.module';
-import { CreateAuth } from 'test/utils/interfaces';
+import { AuthAPI } from 'test/utils/auth-test';
+import { MockAuthGuard } from 'test/config/mocks';
 
 describe('Auth Module (e2e)', () => {
   let app: INestApplication;
@@ -16,92 +17,79 @@ describe('Auth Module (e2e)', () => {
   });
 
   beforeEach(async () => clearDB(dataSource));
+  afterEach(() => (MockAuthGuard.mockUser = null));
+  afterAll(async () => await app.close());
 
-  afterAll(async () => {
-    await app.close();
-  });
-
-  describe('/register (POST)', () => {
+  describe('Create Auth (POST auth/register)', () => {
     it('should register a new user successfully', async () => {
-      const registerDto = {
+      const authAPI = new AuthAPI(app, BASE_URL);
+
+      const payload = {
         email: 'test@example.com',
         password: 'Password123!',
       };
 
-      const response = await request(app.getHttpServer())
-        .post(`${BASE_URL}/register`)
-        .send(registerDto)
-        .expect(HttpStatus.CREATED);
+      const { statusCode, success, data } = await authAPI.create(payload);
 
-      expect(response.body.success).toBe(true);
-      expect(response.statusCode).toBe(201);
+      expect(success).toBe(true);
+      expect(statusCode).toBe(HttpStatus.CREATED);
     });
   });
 
-  describe('/login (POST)', () => {
+  describe('Auth Login (POST auth/login)', () => {
     it('should login successfully with a hashed password', async () => {
-      const data: CreateAuth = {
-        authID: '550e8400-e29b-41d4-a716-446655440001',
-        rawPassword: 'Password123!',
-        userEmail: 'login-success@test.com',
+      const authAPI = new AuthAPI(app, BASE_URL);
+      const payload = {
+        email: 'test@example.com',
+        password: 'Password123!',
       };
 
-      await createAuth(dataSource, data);
-      const loginDto = {
-        email: data.userEmail,
-        password: data.rawPassword,
-      };
+      await authAPI.create(payload);
+      const {
+        statusCode,
+        success,
+        data: authData,
+      } = await authAPI.login(payload);
 
-      return request(app.getHttpServer())
-        .post(`${BASE_URL}/login`)
-        .send(loginDto)
-        .expect(HttpStatus.OK)
-        .expect((res) => {
-          const { data, message } = res.body.data;
-          expect(res.body.success).toBe(true);
-          expect(data).toHaveProperty('accessToken');
-          expect(message).toBe('Login successfully');
-        });
+      expect(statusCode).toBe(HttpStatus.OK);
+      expect(success).toBeTruthy();
+      expect(authData.data).toHaveProperty('accessToken');
     });
 
     it('should fail 401 if password is incorrect', async () => {
-      const loginDto = {
+      const authAPI = new AuthAPI(app, BASE_URL);
+      const invalidPayload = {
         email: 'login-success@test.com',
-        password: 'WrongPassword',
+        password: 'WrongPassword!',
       };
 
-      return request(app.getHttpServer())
-        .post(`${BASE_URL}/login`)
-        .send(loginDto)
-        .expect(HttpStatus.UNAUTHORIZED);
+      const { statusCode } = await authAPI.login(invalidPayload);
+
+      expect(statusCode).toBe(HttpStatus.UNAUTHORIZED);
     });
   });
 
-  describe('/logout (POST) - Protected', () => {
+  describe('Auth logout (POST auth/logout)', () => {
     it('should logout successfully using MockAuthGuard', async () => {
-      const data: CreateAuth = {
-        authID: '550e8400-e29b-41d4-a716-446655440000',
-        rawPassword: 'Password123!',
-        userEmail: 'login-success@test.com',
+      const authAPI = new AuthAPI(app, BASE_URL);
+      const payload = {
+        email: 'test@example.com',
+        password: 'Password123!',
       };
 
-      await createAuth(dataSource, data);
+      await authAPI.create(payload);
+      await authAPI.login(payload);
+      await authAPI.syncMockGuard(payload.email, dataSource);
 
-      const payload = { id: '550e8400-e29b-41d4-a716-446655440000' };
+      const { statusCode, success, data: authData } = await authAPI.logout();
 
-      return request(app.getHttpServer())
-        .post(`${BASE_URL}/logout`)
-        .send(payload)
-        .expect(HttpStatus.OK)
-        .expect((res) => {
-          const { message } = res.body.data;
-          expect(res.body.success).toBe(true);
-          expect(message).toBe('Logout successful');
-        });
+      expect(statusCode).toBe(HttpStatus.OK);
+      expect(success).toBeTruthy();
+      expect(authData.message).toBe('Logout successful');
     });
   });
 
-  describe('/recovery-password (POST)', () => {
+  describe('Auth recovery password (POST auth/recovery-password)', () => {
     it('should return 200 even if email does not exist (Security Best Practice)', async () => {
       return request(app.getHttpServer())
         .post(`${BASE_URL}/recovery-password`)

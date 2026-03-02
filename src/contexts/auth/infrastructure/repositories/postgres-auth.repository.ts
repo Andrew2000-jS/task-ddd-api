@@ -32,6 +32,7 @@ export class PostgresAuthRepository extends AuthRepository {
   async findByEmail(email: AuthEmail): Promise<Auth | null> {
     const entity = await this.repository.findOne({
       where: { email: email.getValue() },
+      relations: ['user'],
     });
 
     return entity ? AuthMapper.toDomain(entity) : null;
