@@ -2,7 +2,6 @@ import {
   IsString,
   IsNotEmpty,
   IsDateString,
-  IsUUID,
   MinLength,
   MaxLength,
 } from 'class-validator';

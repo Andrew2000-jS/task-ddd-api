@@ -8,14 +8,10 @@ export class CreateTaskUseCase {
   constructor(private readonly repository: TaskRepository) {}
 
   async execute(data: CreateTaskDto): Promise<PrimitiveTask> {
-    try {
-      const task = Task.create(data);
+    const task = Task.create(data);
 
-      await this.repository.save(task);
+    await this.repository.save(task);
 
-      return task.toPrimitives();
-    } catch (error) {
-      throw error;
-    }
+    return task.toPrimitives();
   }
 }

@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { CreateUserController } from './api/http/create-user/create-user.ctr';
 import { UpdateUserController } from './api/http/update-user/update-user.ctr';
 import { DeleteUserController } from './api/http/delete-user/delete-user.ctr';
 import { FindOneUserController } from './api/http/find-one-user/find-one-user.ctr';

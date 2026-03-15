@@ -13,23 +13,19 @@ export class DeleteUserUseCase {
   ) {}
 
   async execute(id: string): Promise<void> {
-    try {
-      const authId = new AuthId(id);
+    const authId = new AuthId(id);
 
-      const user = await this.repository.findOne(authId);
+    const user = await this.repository.findOne(authId);
 
-      if (!user) throw new NotFoundError('user');
+    if (!user) throw new NotFoundError('user');
 
-      await this.repository.delete(authId);
+    await this.repository.delete(authId);
 
-      const event = new UserDeletedEvent(authId.getValue());
+    const event = new UserDeletedEvent(authId.getValue());
 
-      this.redisClient.emit(event.eventName, {
-        aggregateId: event.aggregateId,
-        ocurredOn: event.occurredOn,
-      });
-    } catch (error) {
-      throw error;
-    }
+    this.redisClient.emit(event.eventName, {
+      aggregateId: event.aggregateId,
+      ocurredOn: event.occurredOn,
+    });
   }
 }

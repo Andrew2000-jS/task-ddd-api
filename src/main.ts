@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import helmet from 'helmet';
 import { GlobalExceptionFilter } from './shared/contexts/infrastructure/http/global-exception.filter';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';

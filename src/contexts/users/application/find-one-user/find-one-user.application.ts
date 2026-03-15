@@ -9,16 +9,12 @@ export class FindOneUserUseCase {
   constructor(private readonly repository: UserRepository) {}
 
   async execute(id: string): Promise<PrimitivesUser> {
-    try {
-      if (!id) throw new Error('You must provide a valid id');
+    if (!id) throw new Error('You must provide a valid id');
 
-      const user = await this.repository.findOne(new AuthId(id));
+    const user = await this.repository.findOne(new AuthId(id));
 
-      if (!user) throw new NotFoundError('user');
+    if (!user) throw new NotFoundError('user');
 
-      return user.toPrimitives();
-    } catch (error) {
-      throw error;
-    }
+    return user.toPrimitives();
   }
 }

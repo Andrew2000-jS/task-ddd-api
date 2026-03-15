@@ -8,15 +8,11 @@ export class DeleteTaskUseCase {
   constructor(private readonly repository: TaskRepository) {}
 
   async execute(id: string): Promise<void> {
-    try {
-      const taskId = new TaskId(id);
+    const taskId = new TaskId(id);
 
-      const task = await this.repository.findOne(taskId);
-      if (!task) throw new NotFoundError('task');
+    const task = await this.repository.findOne(taskId);
+    if (!task) throw new NotFoundError('task');
 
-      await this.repository.delete(taskId);
-    } catch (error) {
-      throw error;
-    }
+    await this.repository.delete(taskId);
   }
 }

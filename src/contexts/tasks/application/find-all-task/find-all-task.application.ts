@@ -36,6 +36,7 @@ export class FindAllTasksUseCase {
         },
       };
     } catch (error) {
+      console.log(error);
       return {
         data: [],
         meta: {

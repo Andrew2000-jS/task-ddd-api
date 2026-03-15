@@ -6,7 +6,6 @@ import {
   HttpStatus,
   HttpCode,
   UseGuards,
-  Req,
 } from '@nestjs/common';
 import type { Response } from 'express';
 import { CreateTaskControllerDto } from './create-task.ctr.dto';

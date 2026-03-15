@@ -11,19 +11,15 @@ export class FindOneTaskUseCase {
   constructor(private readonly repository: TaskRepository) {}
 
   async execute({ id, slug }: FindOneTaskDto): Promise<PrimitiveTask> {
-    try {
-      if (!id && !slug)
-        throw new Error('You must provide either an id or a slug');
+    if (!id && !slug)
+      throw new Error('You must provide either an id or a slug');
 
-      const task = id
-        ? await this.repository.findOne(new TaskId(id))
-        : await this.repository.findBySlug(new TaskSlug(slug!));
+    const task = id
+      ? await this.repository.findOne(new TaskId(id))
+      : await this.repository.findBySlug(new TaskSlug(slug!));
 
-      if (!task) throw new NotFoundError('task');
+    if (!task) throw new NotFoundError('task');
 
-      return task.toPrimitives();
-    } catch (error) {
-      throw error;
-    }
+    return task.toPrimitives();
   }
 }

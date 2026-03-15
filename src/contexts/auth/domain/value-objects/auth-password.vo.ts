@@ -20,7 +20,7 @@ export class AuthPassword extends ValueObject<string> {
   }
 
   async compare(plainText: string): Promise<boolean> {
-    return bcrypt.compare(plainText, this.value);
+    return await bcrypt.compare(plainText, this.value);
   }
 
   private static validatePlain(plainText: string): void {
