@@ -100,13 +100,6 @@ describe('User Module (e2e)', () => {
         password: 'Abc@12345',
       };
 
-      const userPayload = {
-        firstname: 'John',
-        lastname: 'Doe',
-        username: 'johndoe',
-        birthday: '1990-01-01',
-      };
-
       await authAPI.create(authPayload);
       await authAPI.login(authPayload);
       await authAPI.syncMockGuard(authPayload.email, dataSource);

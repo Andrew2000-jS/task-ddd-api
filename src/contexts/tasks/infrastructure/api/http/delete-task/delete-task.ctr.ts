@@ -12,7 +12,7 @@ import { API_V1_TASKS } from '../constants';
 import { DeleteTaskUseCase } from 'src/contexts/tasks/application/delete-task/delete-task.application';
 import { ParamDto } from 'src/shared/contexts/infrastructure/dto/query.dto';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Task')
 @Controller(API_V1_TASKS)
@@ -22,6 +22,10 @@ export class DeleteTaskController {
   constructor(private readonly useCase: DeleteTaskUseCase) {}
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Remove a task',
+    description: 'Permanently deletes a specific task from the database.',
+  })
   @HttpCode(HttpStatus.NO_CONTENT)
   async run(@Param() { id }: ParamDto, @Res() res: Response): Promise<void> {
     await this.useCase.execute(id);

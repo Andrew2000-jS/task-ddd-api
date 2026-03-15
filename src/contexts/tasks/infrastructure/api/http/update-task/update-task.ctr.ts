@@ -14,7 +14,7 @@ import { API_V1_TASKS } from '../constants';
 import { UpdateTaskUseCase } from 'src/contexts/tasks/application/update-task/update-task.application';
 import { ParamDto } from 'src/shared/contexts/infrastructure/dto/query.dto';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
 @ApiTags('Task')
@@ -25,6 +25,11 @@ export class UpdateTaskController {
   constructor(private readonly useCase: UpdateTaskUseCase) {}
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Update task details',
+    description:
+      "Modifies an existing task's information based on the provided ID.",
+  })
   @HttpCode(HttpStatus.OK)
   async run(
     @Param() { id }: ParamDto,

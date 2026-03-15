@@ -13,16 +13,12 @@ export class AuthAPI implements ApiTest {
   constructor(
     private app: INestApplication,
     private url: string,
-    private id: string = '',
   ) {}
 
   async create({ email, password }: Auth): Promise<ApiTestResponse> {
     const response = await request(this.app.getHttpServer())
       .post(`${this.url}/register`)
       .send({ email, password });
-
-    const { data } = response.body.data;
-    this.id = data.id;
 
     return {
       ...response.body,

@@ -12,7 +12,7 @@ import { API_V1_TASKS } from '../constants';
 import { FindAllTasksUseCase } from 'src/contexts/tasks/application/find-all-task/find-all-task.application';
 import { QueryAllCtrDto } from 'src/shared/contexts/infrastructure/dto/query.dto';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
 @ApiTags('Task')
@@ -23,6 +23,11 @@ export class FindAllTasksController {
   constructor(private readonly useCase: FindAllTasksUseCase) {}
 
   @Get()
+  @ApiOperation({
+    summary: 'Retrieve all tasks',
+    description:
+      'Fetches a complete list of tasks associated with the authenticated user.',
+  })
   @HttpCode(HttpStatus.OK)
   async run(
     @Query() { limit, offset }: QueryAllCtrDto,

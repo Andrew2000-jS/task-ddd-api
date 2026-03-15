@@ -10,7 +10,6 @@ import { ResetPasswordUseCase } from '../application/reset-password/reset-passwo
 import { AuthRepository } from '../domain/auth.repository';
 import { PostgresAuthRepository } from './repositories/postgres-auth.repository';
 import { CreateAuthController } from './api/http/create-auth/create-auth.ctr';
-import { DeleteAuthController } from './api/http/delete-auth/delete-auth.ctr';
 import { LoginController } from './api/http/login/login.ctr';
 import { LogoutController } from './api/http/logout/logout.ctr';
 import { RecoveryPasswordController } from './api/http/recovery-password/recovery-password.ctr';
@@ -19,6 +18,7 @@ import { TokenService } from '../domain/services/token.service';
 import { JwtTokenService } from './services/jwt-token.service';
 import { JwtModule } from '@nestjs/jwt';
 import { AuthGuard } from './guards/auth.guard';
+import { DeleteUserEventController } from './api/events/delete-user.event.ctr';
 
 @Module({
   imports: [JwtModule.register({})],
@@ -43,7 +43,7 @@ import { AuthGuard } from './guards/auth.guard';
   ],
   controllers: [
     CreateAuthController,
-    DeleteAuthController,
+    DeleteUserEventController,
     LoginController,
     LogoutController,
     RecoveryPasswordController,

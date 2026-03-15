@@ -10,7 +10,7 @@ import type { Response } from 'express';
 import { CreateAuthDto } from './create-auth.ctr.dto';
 import { CreateAuthUseCase } from 'src/contexts/auth/application/create-auth/create-auth.application';
 import { API_V1_AUTH } from '../constants';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
 @ApiTags('Authentication')
@@ -19,6 +19,11 @@ export class CreateAuthController {
   constructor(private readonly useCase: CreateAuthUseCase) {}
 
   @Post('register')
+  @ApiOperation({
+    summary: 'Register a new user',
+    description:
+      'Creates a new user account in the system and initializes default settings.',
+  })
   @HttpCode(HttpStatus.CREATED)
   async handle(@Body() data: CreateAuthDto, @Res() res: Response) {
     const result = await this.useCase.execute(data);

@@ -11,7 +11,7 @@ import { FindOneUserUseCase } from 'src/contexts/users/application/find-one-user
 import { API_V1_USERS } from '../constants';
 import { AuthGuard } from 'src/contexts/auth/infrastructure/guards/auth.guard';
 import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GetUser } from 'src/shared/contexts/infrastructure/decorators/get-user.decorator';
 
 @ApiTags('User')
@@ -22,6 +22,11 @@ export class FindOneUserController {
   constructor(private readonly useCase: FindOneUserUseCase) {}
 
   @Get('profile')
+  @ApiOperation({
+    summary: 'Get profile data',
+    description:
+      'Retrieves the full profile details of the currently logged-in user.',
+  })
   @HttpCode(HttpStatus.OK)
   async run(@GetUser('sub') id: string, @Res() res: Response): Promise<void> {
     const user = await this.useCase.execute(id);

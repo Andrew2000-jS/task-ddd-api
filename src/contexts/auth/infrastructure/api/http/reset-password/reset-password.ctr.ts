@@ -10,7 +10,7 @@ import type { Response } from 'express';
 import { ResetPasswordUseCase } from 'src/contexts/auth/application/reset-password/reset-password.application';
 import { ResetPasswordDto } from './reset-password.ctr.dto';
 import { API_V1_AUTH } from '../constants';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { ApiResponseFactory } from 'src/shared/contexts/infrastructure/http/api-response.factory';
 
 @ApiTags('Authentication')
@@ -19,6 +19,10 @@ export class ResetPasswordController {
   constructor(private readonly useCase: ResetPasswordUseCase) {}
 
   @Post('reset-password')
+  @ApiOperation({
+    summary: 'Update forgotten password',
+    description: 'Updates the user password using a valid recovery token.',
+  })
   @HttpCode(HttpStatus.OK)
   async handle(
     @Body() { token, newPassword }: ResetPasswordDto,
